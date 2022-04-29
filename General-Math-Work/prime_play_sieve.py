@@ -2,7 +2,7 @@
 #
 # Author: Jonathan Heard
 # Wrote code to find prime numbers using the Sieve of Eeratosthenes methodology.
-# Modified the base, to allow the finding of a range of prime numbers.
+#   Modified the base, to allow the finding of a range of prime numbers.
 #
 
 #

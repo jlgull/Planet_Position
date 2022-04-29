@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 #
 # Author: Jonathan Heard
-# Work for CIS156, based on zyBook, CIS156: Python Programming: Level 1
-# copied out of Chapter 5.9 to practice and change.
+# Work on calculating prime numbers and also timing them to the second.
+#   To time to nSeconds, switch which of the perf_counter items to use,
+#   and also change the format and label in the print statmets.
 #
 
 #
-# Import all required options
+# Import all required items.
 #
 from kennedy_13 import clear, get_data
 """ This is a module written to contain tools used throughout the main program
@@ -18,6 +19,11 @@ from kennedy_13 import clear, get_data
 """
 
 from time import perf_counter, perf_counter_ns
+
+#
+# End of the Import section.
+#
+
 
 #
 # Define functions
