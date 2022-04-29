@@ -56,7 +56,8 @@ def menu():
                         4:  "List All Planets Data",
                         5:  "Add Planetary Data",
                         6:  "Show Planets position",
-                        7:  "Ending the program"
+                        7:  "Determine a Julian Date",
+                        8:  "Ending the program"
                      }
 
         # Print out the Menu items.

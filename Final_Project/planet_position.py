@@ -35,13 +35,45 @@ from julian_date import julian_date
 
 from menu_builder import menu
 
+from celestial_objects import Object
+
 
 #
 # End of the Import section.
 #
 
+"""
+
+Variable List
+
+List info:
+    object_list        -   List variable to contain all the celestial data objects entered and allow for the
+                            various methods to be applied to them.
+
+String variables:
+    In main program:
+        do_again    -   Control value for repeating the program.
+        command     -   The value entered into the menu system to control the main program.
+
+    In class:
+ 
+Floating point numbers:
+    In main program:
+
+    In function:
+
+Integers numbers: 
+    In main program:
+        command     -   The value entered into the menu system to control the main program.
+
+    In function:
+
+"""
+
 # Set the while control value to "Y".
 do_again = "Y"
+
+sky_objects = list()
 
 # Use while, regarding the desire to re-run the program.
 while do_again != "N":
@@ -50,13 +82,43 @@ while do_again != "N":
     clear()
     print()
 
-    date = julian_date()
+    while True:
 
-    print(f"\nThe Julian Date & Time for what was entered is: {date:.22f}")
+        command = menu()
 
-    action = menu()
+        # Retrieve data from the sky objects data file.
+        if command == 1:
+            with open("sky_data.txt") as sky_data:
+                sky_objects.append(sky_data())
 
-    print(f"Your choice was: {action}")
+        # Write data to the sky objects data file.
+        if command == 2:
+            with open("sky_data.txt", "a") as sky_data:
+                for object in sky_objects:
+                    sky_data.write(str(object.info_planet()))
+
+
+        # List all entered sky objects data.
+        if command == 4:
+            for object in sky_objects:
+                print(object.info_planet())
+
+        # Enter new sky objects data.
+        if command == 5:
+            sky_objects.append(Object())
+
+
+        # Gather and print the Julian date.
+        if command == 7:
+            date = julian_date()
+
+            # Testing the Julian date function
+            print(f"\nThe Julian Date & Time for what was entered is: {date:.22f}")
+
+        else:
+            break
+            # print(f"Your choice was: {command}")
+
     # Ask if the user would like to repeat the program.
     # Also, validate for the correct response.
     while True:
