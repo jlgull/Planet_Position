@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Author: Jonathan Heard
-# Work on calculating planet positions, based on a requested date.
+# Work on calculating just the sun's positions, based on a requested date.
 #   The starting point for this project was https://www.stjarnhimlen.se/comp/ppcomp.html
 #       and https://stjarnhimlen.se/comp/tutorial.html#4
 #   From this point on, I am converting the code to run in Python.
@@ -35,9 +35,10 @@ from julian_date import julian_date
 
 import pandas
 
+from math import pi, sin, cos
+
 # from menu_builder import menu
 
-# from celestial_objects import Object
 
 
 #
@@ -86,15 +87,12 @@ while do_again != "N":
     clear()
     print()
 
-    """ Compute ecl!
-    Another quantity we will need is ecl, the obliquity of the ecliptic, i.e. the "tilt" of the Earth's axis of 
-        rotation (currently 23.4 degrees and slowly decreasing). 
-        First, compute the "d" of the moment of interest (section 3).
-        Then, compute the obliquity of the ecliptic:
-        ecl = 23.4393 - 3.563E-7 * d
     """
-
+    Determine the Julian date, to be uses for the rest of the program.
+    """
     d = julian_date()
+
+    print(f"Julian Date: {d}")
 
     """
     Another quantity we will need is ecl, the obliquity of the ecliptic, 
@@ -111,10 +109,39 @@ while do_again != "N":
 
     print(f"ecl value: {ecl}")
 
-    celestial_data = pandas.read_csv(celestial_csv_data, index_col=0)
+    celestial_data = pandas.read_csv(celestial_csv_data)
+
+    """
+    Orbital elements of the Sun:
+    N = 0.0
+    i = 0.0
+    w = 282.9404 + 4.70935E-5 * d
+    a = 1.000000  (AU)
+    e = 0.016709 - 1.151E-9 * d
+    M = 356.0470 + 0.9856002585 * d
+    
+    First, compute the eccentric anomaly E from the mean anomaly M and from the eccentricity e 
+        (E and M in degrees):
+    E = M + e*(180/pi) * sin(M) * ( 1.0 + e * cos(M) )
+    """
+
+    # Calculate the value for M. M = mean anomaly (0 at perihelion; increases uniformly with time)
+
+    M = celestial_data.iloc[0, 10] + (celestial_data.iloc[0, 11] * d)
+
+    print(f"Partial value for M = {M}")
+
+    # Calculate the value for e. e = eccentricity (0=circle, 0-1=ellipse, 1=parabola)
+
+    e = celestial_data.iloc[0, 8] + (celestial_data.iloc[0, 9] * d)
+
+    print(f"Partial value for e = {e}")
+
+    E = M + e * (180/pi) * sin(M) * ( 1.0 - e * cos(M))
+
+    print(f"Partial value for E of the {celestial_data.iloc[0, 0]} is: {E}")
 
 
-    print(celestial_data["a"])
 
 
 

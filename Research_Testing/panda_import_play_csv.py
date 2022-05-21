@@ -10,11 +10,11 @@
 
 import pandas
 
-df = pandas.read_csv('Celestial_Objects.csv', index_col=0)
+df = pandas.read_csv('Celestial_Objects.csv')
 
 for i in range(2):
 
-    print(df.iloc[i, 0])
+    print(i, df.iloc[i, 0])
     print(df.iloc[i, 1] * 10)
 
     n = df.iloc[i, 0] + df.iloc[i, 1] * 10
